@@ -16,11 +16,7 @@ from utils import get_size, is_subscribed, get_poster, search_gagala, temp, get_
 from database.users_chats_db import db
 from database.gfilters_mdb import find_gfilter, get_gfilters
 from database.ia_filterdb import Media, get_file_details, get_search_results
-from database.filters_mdb import (
-    del_all,
-    find_filter,
-    get_filters,
-)
+
 import logging
 
 logger = logging.getLogger(__name__)
@@ -423,23 +419,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
-        await query.answer('🔆 @HeroFlix 🔆')
-    elif query.data == "help":
-        buttons = [[
-            InlineKeyboardButton('MANUAL FILTER', callback_data='manuelfilter'),
-            InlineKeyboardButton('AUTO FILTER', callback_data='autofilter')
-        ], [
-            InlineKeyboardButton('CONNECTIONS', callback_data='coct'),
-            InlineKeyboardButton('EXTRA MODS', callback_data='extra')
-        ], [
-            InlineKeyboardButton('🏠 HOME 🏠', callback_data='start'),
-        ]]
-        reply_markup = InlineKeyboardMarkup(buttons)
-        await query.message.edit_text(
-            text=script.HELP_TXT.format(query.from_user.mention),
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        )
+        
     elif query.data == "about":
         buttons = [[
             InlineKeyboardButton('🏠 HOME 🏠', callback_data='start'),
@@ -450,115 +430,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
-    elif query.data == "source":
-        buttons = [[
-            InlineKeyboardButton('🔙 BACK', callback_data='about')
-        ]]
-        reply_markup = InlineKeyboardMarkup(buttons)
-        await query.message.edit_text(
-            text=script.SOURCE_TXT,
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        )
-    elif query.data == "manuelfilter":
-        buttons = [[
-            InlineKeyboardButton('🔙 BACK', callback_data='help'),
-            InlineKeyboardButton('⏹️ BUTTONS', callback_data='button')
-        ]]
-        reply_markup = InlineKeyboardMarkup(buttons)
-        await query.message.edit_text(
-            text=script.MANUELFILTER_TXT,
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        )
-    elif query.data == "button":
-        buttons = [[
-            InlineKeyboardButton('🔙 BACK', callback_data='manuelfilter')
-        ]]
-        reply_markup = InlineKeyboardMarkup(buttons)
-        await query.message.edit_text(
-            text=script.BUTTON_TXT,
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        )
-    elif query.data == "autofilter":
-        buttons = [[
-            InlineKeyboardButton('🔙 BACK', callback_data='help')
-        ]]
-        reply_markup = InlineKeyboardMarkup(buttons)
-        await query.message.edit_text(
-            text=script.AUTOFILTER_TXT,
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        )
-    elif query.data == "coct":
-        buttons = [[
-            InlineKeyboardButton('🔙 BACK', callback_data='help')
-        ]]
-        reply_markup = InlineKeyboardMarkup(buttons)
-        await query.message.edit_text(
-            text=script.CONNECTION_TXT,
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        )
-    elif query.data == "extra":
-        buttons = [[
-            InlineKeyboardButton('🔙 BACK', callback_data='help'),
-            InlineKeyboardButton('👮‍♂️ ADMIN', callback_data='admin')
-        ]]
-        reply_markup = InlineKeyboardMarkup(buttons)
-        await query.message.edit_text(
-            text=script.EXTRAMOD_TXT,
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        )
-    elif query.data == "admin":
-        buttons = [[
-            InlineKeyboardButton('🔙 BACK', callback_data='extra')
-        ]]
-        reply_markup = InlineKeyboardMarkup(buttons)
-        await query.message.edit_text(
-            text=script.ADMIN_TXT,
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        )
-    elif query.data == "stats":
-        buttons = [[
-            InlineKeyboardButton('🔙 BACK', callback_data='help'),
-            InlineKeyboardButton('♻️ Refresh', callback_data='rfrsh')
-        ]]
-        reply_markup = InlineKeyboardMarkup(buttons)
-        total = await Media.count_documents()
-        users = await db.total_users_count()
-        chats = await db.total_chat_count()
-        monsize = await db.get_db_size()
-        free = 536870912 - monsize
-        monsize = get_size(monsize)
-        free = get_size(free)
-        await query.message.edit_text(
-            text=script.STATUS_TXT.format(total, users, chats, monsize, free),
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        )
-    elif query.data == "rfrsh":
-        await query.answer("Getting Statistics ♻️")
-        buttons = [[
-            InlineKeyboardButton('🔙 BACK', callback_data='help'),
-            InlineKeyboardButton('♻️ Refresh', callback_data='rfrsh')
-        ]]
-        reply_markup = InlineKeyboardMarkup(buttons)
-        total = await Media.count_documents()
-        users = await db.total_users_count()
-        chats = await db.total_chat_count()
-        monsize = await db.get_db_size()
-        free = 536870912 - monsize
-        monsize = get_size(monsize)
-        free = get_size(free)
-        await query.message.edit_text(
-            text=script.STATUS_TXT.format(total, users, chats, monsize, free),
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        )
+    
     elif query.data.startswith("setgs"):
         ident, set_type, status, grp_id = query.data.split("#")
         grpid = await active_connection(str(query.from_user.id))
@@ -640,10 +512,13 @@ async def auto_filter(client, msg, spoll=False):
         ]
     )
 
-    if offset != "":
-        key = f"{message.chat.id}-{message.id}"
-        BUTTONS[key] = search
-        req = message.from_user.id if message.from_user else 0
+    if 0 < offset <= 10:
+        off_set = 0
+    elif offset == 0:
+        off_set = None
+    else:
+        off_set = offset - 10
+    if n_offset == 0:
         btn.append(
             [InlineKeyboardButton(text=f"📚 1/{math.ceil(int(total_results) / 10)}", callback_data="pages"),
              InlineKeyboardButton(text="Next ⏩", callback_data=f"next_{req}_{key}_{offset}")]
