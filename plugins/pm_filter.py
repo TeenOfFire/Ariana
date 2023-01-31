@@ -8,7 +8,7 @@ from Script import script
 import pyrogram
 from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, \
     make_inactive
-from info import G_FILTER, SELF_DELETE, SELF_DELETE_SECONDS, AUTH_CHANNEL
+from info import G_FILTER, SELF_DELETE, SELF_DELETE_SECONDS, AUTH_CHANNEL, CUSTOM_FILE_CAPTION
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pyrogram import Client, filters, enums
 from pyrogram.errors import FloodWait, UserIsBlocked, MessageNotModified, PeerIdInvalid
@@ -16,7 +16,6 @@ from utils import get_size, is_subscribed, get_poster, search_gagala, temp, get_
 from database.users_chats_db import db
 from database.gfilters_mdb import find_gfilter, get_gfilters
 from database.ia_filterdb import Media, get_file_details, get_search_results
-
 import logging
 
 logger = logging.getLogger(__name__)
@@ -24,6 +23,7 @@ logger.setLevel(logging.ERROR)
 
 BUTTONS = {}
 SPELL_CHECK = {}
+G_MODE = {}
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
@@ -81,7 +81,7 @@ async def next_page(bot, query):
 
     btn.insert(0,
         [
-            InlineKeyboardButton(text="❓⟨ How To Download ⟩❓", url='https://telegram.me/HEROFLiX/1201')
+            InlineKeyboardButton(text="❓⟨ How To Download ⟩❓", url='https://t.me/HeroFlix/1452')
         ]
     )
 
@@ -402,10 +402,11 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )
     elif query.data == "pages":
         await query.answer()
-    buttons = [[
+    elif query.data == "start":
+        buttons = [[
             InlineKeyboardButton('➕ Add Me To Your Group ➕', callback_data='about')
         ], [
-            InlineKeyboardButton('❓How To Use Me❓', url=f'https://telegram.me/HEROFLiX/1201'),
+            InlineKeyboardButton('❓How To Use Me❓', url=f'https://t.me/HeroFlix/1452'),
         ], [            
             InlineKeyboardButton('🗳 Help', callback_data='help'),
             InlineKeyboardButton('🔅 Group', url='https://t.me/+EdJU1Hqk1N80ZWQ1'),
@@ -420,6 +421,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.answer('🔆 @HeroFlix 🔆')
     elif query.data == "help":
         buttons = [[
+            InlineKeyboardButton('🎗️Group [01]', url='https://t.me/+WzsvFY3qXa9kZGVl'),
+            InlineKeyboardButton('🎗️Group [02]', url='https://t.me/+EdJU1Hqk1N80ZWQ1')
+        ], [
+            InlineKeyboardButton('🔅 Marvel', url='https://t.me/MarvelRiders'),
+            InlineKeyboardButton('🔅 DC', url='https://t.me/DCknights')
+        ], [
             InlineKeyboardButton('🏠 HOME 🏠', callback_data='start'),
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
@@ -435,6 +442,16 @@ async def cb_handler(client: Client, query: CallbackQuery):
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
             text=script.ABOUT_TXT.format(temp.B_NAME),
+            reply_markup=reply_markup,
+            parse_mode=enums.ParseMode.HTML
+        )
+    elif query.data == "source":
+        buttons = [[
+            InlineKeyboardButton('🔙 BACK', callback_data='about')
+        ]]
+        reply_markup = InlineKeyboardMarkup(buttons)
+        await query.message.edit_text(
+            text=script.SOURCE_TXT,
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
@@ -516,17 +533,14 @@ async def auto_filter(client, msg, spoll=False):
 
     btn.insert(0,
         [
-            InlineKeyboardButton(text="❓⟨ How To Download ⟩❓", url='https://telegram.me/HEROFLiX/1201')
+            InlineKeyboardButton(text="❓⟨ How To Download ⟩❓", url='https://t.me/HeroFlix/1452')
         ]
     )
 
-    if 0 < offset <= 10:
-        off_set = 0
-    elif offset == 0:
-        off_set = None
-    else:
-        off_set = offset - 10
-    if n_offset == 0:
+    if offset != "":
+        key = f"{message.chat.id}-{message.id}"
+        BUTTONS[key] = search
+        req = message.from_user.id if message.from_user else 0
         btn.append(
             [InlineKeyboardButton(text=f"📚 1/{math.ceil(int(total_results) / 10)}", callback_data="pages"),
              InlineKeyboardButton(text="Next ⏩", callback_data=f"next_{req}_{key}_{offset}")]
