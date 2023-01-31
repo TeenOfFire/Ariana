@@ -402,8 +402,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )
     elif query.data == "pages":
         await query.answer()
-    elif query.data == "start":
-        buttons = [[
+    buttons = [[
             InlineKeyboardButton('➕ Add Me To Your Group ➕', callback_data='about')
         ], [
             InlineKeyboardButton('❓How To Use Me❓', url=f'https://telegram.me/HEROFLiX/1201'),
@@ -415,13 +414,13 @@ async def cb_handler(client: Client, query: CallbackQuery):
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
             text=script.START_TXT.format(query.from_user.mention, temp.U_NAME, temp.B_NAME),
+            reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
-
         await query.answer('🔆 @HeroFlix 🔆')
     elif query.data == "help":
         buttons = [[
-            InlineKeyboardButton('🔙 BACK ', callback_data='start'),
+            InlineKeyboardButton('🏠 HOME 🏠', callback_data='start'),
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
@@ -431,11 +430,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )
     elif query.data == "about":
         buttons = [[
-            InlineKeyboardButton('🔙 BACK ', callback_data='start'),
+            InlineKeyboardButton('🏠 HOME 🏠', callback_data='start'),
          ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
             text=script.ABOUT_TXT.format(temp.B_NAME),
+            reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
     
