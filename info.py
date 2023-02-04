@@ -13,11 +13,11 @@ def is_enabled(value, default):
 SESSION = environ.get('SESSION', 'Media_search')
 API_ID = int(environ.get('API_ID', '1736204'))
 API_HASH = environ.get('API_HASH', '890d40e0f91a4de32dec2965444b2cbe')
-BOT_TOKEN = environ.get('BOT_TOKEN', '5712412804:AAHQn7NhSEHUn0aF_CIlBGKk1l69mVbTW3k')
+BOT_TOKEN = environ.get('BOT_TOKEN', '6062946689:AAFg3rWb9CxWOL83EkYYFn07okosmQMA7S4')
 
 CACHE_TIME = int(environ.get('CACHE_TIME', 300))
 USE_CAPTION_FILTER = bool(environ.get('USE_CAPTION_FILTER', False))
-PICS = (environ.get('PICS', 'https://te.legra.ph/file/30ef18b360b85a33f712b.jpg https://te.legra.ph/file/e17896174c04e67417b4a.jpg https://te.legra.ph/file/ae7342b2b4b4c0d0b448a.jpg https://te.legra.ph/file/2405007ed86482c637118.jpg')).split()
+PICS = (environ.get('PICS', 'https://graph.org/file/f612a75d2304d0fea7ce6.jpg https://graph.org/file/c5c38a0cf5e83726ab894.jpg')).split()
 
 ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '1058015838').split()]
 CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '-1001638006524').split()]
@@ -29,8 +29,8 @@ AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_chan
 AUTH_GROUPS = [int(ch) for ch in auth_grp.split()] if auth_grp else None
 
 DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://Sydney:Sydney@sydney.1s7fbgj.mongodb.net/?retryWrites=true&w=majority")
-DATABASE_NAME = environ.get('DATABASE_NAME', "sydney")
-COLLECTION_NAME = environ.get('COLLECTION_NAME', 'sydney')
+DATABASE_NAME = environ.get('DATABASE_NAME', "ariana")
+COLLECTION_NAME = environ.get('COLLECTION_NAME', 'ariana')
 
 LOG_CHANNEL = int(environ.get('LOG_CHANNEL', '-1001652564383'))
 SUPPORT_CHAT = environ.get('SUPPORT_CHAT', '5884491121')
@@ -60,7 +60,7 @@ LOG_STR += (f"MAX_LIST_ELM Found, long list will be shortened to first {MAX_LIST
 LOG_STR += f"Your current IMDB template is {IMDB_TEMPLATE}"
 
 G_FILTER = bool(environ.get("G_FILTER", True))
-SELF_DELETE_SECONDS = int(environ.get('SELF_DELETE_SECONDS', 600))
+SELF_DELETE_SECONDS = int(environ.get('SELF_DELETE_SECONDS', 1200))
 SELF_DELETE = environ.get('SELF_DELETE', True)
 if SELF_DELETE == "True":
     SELF_DELETE = True
