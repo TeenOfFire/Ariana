@@ -23,7 +23,6 @@ logger.setLevel(logging.ERROR)
 
 BUTTONS = {}
 SPELL_CHECK = {}
-G_MODE = {}
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
@@ -409,7 +408,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             InlineKeyboardButton('❓How To Use Me❓', url=f'https://t.me/HeroFlix/1452'),
         ], [            
             InlineKeyboardButton('🗳 Help', callback_data='help'),
-            InlineKeyboardButton('🔅 Group', url='https://t.me/+EdJU1Hqk1N80ZWQ1'),
+            InlineKeyboardButton('🔅 Group', url='https://telegram.me/+EdJU1Hqk1N80ZWQ1'),
             InlineKeyboardButton('🤖 Updates', url='https://telegram.me/HeroFlix')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
@@ -475,7 +474,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             buttons = [
                 [
                     InlineKeyboardButton('📒 IMDB', callback_data=f'setgs#imdb#{settings["imdb"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('YES ✅' if settings["imdb"] else '❌ NO',
+                    InlineKeyboardButton('YES ✅' if settings["imdb"] else 'NO ❌',
                                          callback_data=f'setgs#imdb#{settings["imdb"]}#{str(grp_id)}')
                 ]
             ]
@@ -584,7 +583,7 @@ async def auto_filter(client, msg, spoll=False):
             **locals()
         )
     else:      
-        cap = f"<b>🔆 Your Search Results</b> ‛{search}’ 👇"
+        cap = f"<b>🔆 Your Search Results</b> ‛{search}’👇"
     if imdb and imdb.get('poster'):
         try:
             hehe =  await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024],
