@@ -1,6 +1,4 @@
 import logging
-import asyncio
-from pyrogram.errors import FloodWait
 from pyrogram import Client, filters, enums
 from pyrogram.errors.exceptions.bad_request_400 import ChannelInvalid, ChatAdminRequired, UsernameInvalid, UsernameNotModified
 from info import ADMINS
@@ -12,6 +10,13 @@ import re
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 lock = asyncio.Lock()
+import asyncio
+from pyrogram.errors import FloodWait
+
+    try:
+     
+    except FloodWait as e:
+        await asyncio.sleep(10)  
 
 
 @Client.on_callback_query(filters.regex(r'^index'))
