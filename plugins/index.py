@@ -13,8 +13,6 @@ lock = asyncio.Lock()
 import asyncio
 from pyrogram.errors import FloodWait
 
-    try:
-     
     except FloodWait as e:
         await asyncio.sleep(10)  
 
