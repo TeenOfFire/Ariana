@@ -1,4 +1,3 @@
-
 import pymongo
 from info import DATABASE_URI, DATABASE_NAME
 from pyrogram import enums
@@ -8,8 +7,6 @@ logger.setLevel(logging.ERROR)
 
 myclient = pymongo.MongoClient(DATABASE_URI)
 mydb = myclient["GlobalFilters"]
-
-
 
 async def add_gfilter(gfilters, text, reply_text, btn, file, alert):
     mycol = mydb[str(gfilters)]
@@ -70,12 +67,12 @@ async def delete_gfilter(message, text, gfilters):
     if query == 1:
         mycol.delete_one(myquery)
         await message.reply_text(
-            f"'`{text}`'  deleted. I'll not respond to that gfilter anymore.",
+            f"'`{text}`' <b>Filter Deleted 🛃</b>",
             quote=True,
             parse_mode=enums.ParseMode.MARKDOWN
         )
     else:
-        await message.reply_text("Couldn't find that gfilter!", quote=True)
+        await message.reply_text("<b>Filter Not Found 🚫</b>", quote=True)
 
 async def del_allg(message, gfilters):
     if str(gfilters) not in mydb.list_collection_names():
@@ -85,7 +82,7 @@ async def del_allg(message, gfilters):
     mycol = mydb[str(gfilters)]
     try:
         mycol.drop()
-        await message.edit_text(f"All filters has been removed")
+        await message.edit_text(f"<b>Deleted All Filters 🛃</b>")
     except:
         await message.edit_text("Couldn't remove all filters!")
         return
