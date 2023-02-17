@@ -15,7 +15,7 @@ class script(object):
     HELP_TXT = """<b>🥁 </b><b><u>How To Download Any Movie, Series, Anime etc., For Free???</u></b> \n\n<b>🎗Group [01]: </b><b>https://t.me/+WzsvFY3qXa9kZGVl</b> \n\n<b>🎗Group</b> <b>[02]: </b><b>https://t.me/+EdJU1Hqk1N80ZWQ1</b> \n\n<b>🔆</b> <b>Join Any Of These Groups</b>👆"""
     ABOUT_TXT = """<i><u>🧶 </u></i><i><u><b>Follow These Steps To Connect Me To Your Group</b>👇</u>
 
-1. Click on This [</i><a href="http://telegram.me/hflix01bot?startgroup=true"><i>Blue Text</i></a><i>]
+1. Click on This [</i><a href="http://telegram.me/hflix02bot?startgroup=true"><i>Blue Text</i></a><i>]
 2. Select Your Group
 3. Make Me Admin in Your Group</i>"""    
     
