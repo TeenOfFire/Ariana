@@ -142,7 +142,7 @@ async def index_files_to_db(lst_msg_id, chat, msg, bot):
             temp.CANCEL = False
             async for message in bot.iter_messages(chat, lst_msg_id, temp.CURRENT):
                 if temp.CANCEL:
-                    await msg.edit(f"Successfully Cancelled!!\n\nSaved <code>{total_files}</code> files to dataBase!\nDuplicate Files Skipped: <code>{duplicate}</code>\nDeleted Messages Skipped: <code>{deleted}</code>\nNon-Media messages skipped: <code>{no_media + unsupported}</code>(Unsupported Media - `{unsupported}` )\nErrors Occurred: <code>{errors}</code>")
+                    await msg.edit(f"<b>Cancelled Index </b>🚫\n\n● Saved Files {total_files} \n● Duplicate Files Skipped: {duplicate}\n● Deleted Messages Skipped: {deleted}\n● Non-Media Messages Skipped: {no_media + unsupported}\n● Unsupported Media - `{unsupported}` )\n● Errors Occurred: {errors}")
                     break
                 current += 1
                 if current % 20 == 0:
@@ -177,4 +177,4 @@ async def index_files_to_db(lst_msg_id, chat, msg, bot):
             logger.exception(e)
             await msg.edit(f'Error: {e}')
         else:
-            await msg.edit(f'<b>🔆 Saved </b><code>{total_files}</code> <b>Files!</b>\n\nDuplicate Files: <code>{duplicate}</code>\nDeleted Messages: <code>{deleted}</code>\nNon-Media Messages: <code>{no_media + unsupported}</code>\nUnsupported Media - `{unsupported}`\nErrors Occurred: <code>{errors}</code>')
+            await msg.edit(f'<b>🔆 Saved "{total_files}" Files!</b>\n\n● Duplicate Files: {duplicate}\n● Deleted Messages: {deleted}\n● Non-Media Messages: {no_media + unsupported}\n● Unsupported Media: `{unsupported}`\n● Errors Occurred: {errors}')
