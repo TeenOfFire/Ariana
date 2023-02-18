@@ -149,7 +149,7 @@ async def index_files_to_db(lst_msg_id, chat, msg, bot):
                     can = [[InlineKeyboardButton('Cancel', callback_data='index_cancel')]]
                     reply = InlineKeyboardMarkup(can)
                     await msg.edit_text(
-                        text=f"● Total Messages Fetched: <code>{current}</code>\n● Total Messages Saved: <code>{total_files}</code>\n● Duplicate Files Skipped: <code>{duplicate}</code>\n● Deleted Messages Skipped: <code>{deleted}</code>\n● Non-Media Messages Skipped: <code>{no_media + unsupported}</code>● Unsupported Media: {unsupported} \n● Errors Occurred: {errors}",
+                        text=f"● Total Messages Fetched: {current}\n● Total Messages Saved: {total_files}\n● Duplicate Files Skipped: {duplicate}\n● Deleted Messages Skipped: {deleted}\n● Non-Media Messages Skipped: {no_media + unsupported}\n● Unsupported Media: {unsupported} \n● Errors Occurred: {errors}",
                         reply_markup=reply)
                 if message.empty:
                     deleted += 1
